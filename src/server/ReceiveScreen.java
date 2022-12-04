@@ -1,6 +1,9 @@
 package server;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -19,14 +22,21 @@ public class ReceiveScreen extends Thread {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         while (true) {
-            try {
-                System.out.println(dis.read());
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
+//            byte[] bytes = new byte[1024 * 1024];
+//            int i = 0;
+//            try {
+//                int count = 0;
+//                do {
+//                    count += dis.read(bytes, count, bytes.length - count);
+//                    System.out.println(count);
+//                }
+//                while (!(count > 4 && bytes[count - 2] == (byte) -1 && bytes[count - 1] == (byte) -39));
+//                System.out.println("vita");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                break;
+//            }
         }
     }
 }
