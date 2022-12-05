@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ServerFrame extends JFrame {
+    Pane pane;
 
     public ServerFrame() {
         Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -13,8 +14,15 @@ public class ServerFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Server");
-        add(new JPanel());
         setVisible(true);
+    }
 
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setPane(Pane pane) {
+        this.pane = pane;
+        add(pane);
     }
 }

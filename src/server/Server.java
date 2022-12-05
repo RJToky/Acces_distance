@@ -8,14 +8,6 @@ import java.net.UnknownHostException;
 
 public class Server {
     private final static int PORT = 1822;
-    private final static InetAddress LOCAL_HOST;
-    static {
-        try {
-            LOCAL_HOST = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public Server() throws IOException {
         ServerSocket serverSocket = createServerSocket();
@@ -25,6 +17,7 @@ public class Server {
         System.out.println("Client connecte");
 
         new ReceiveScreen(socket);
+        serverSocket.close();
     }
 
     protected static ServerSocket createServerSocket() throws IOException {
