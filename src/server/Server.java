@@ -30,8 +30,4 @@ public class Server {
     protected static ServerSocket createServerSocket() throws IOException {
         return new ServerSocket(PORT);
     }
-
-    public static void main(String[] args) throws IOException {
-        new Server();
-    }
 }

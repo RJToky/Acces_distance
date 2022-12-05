@@ -19,40 +19,26 @@ public class SendScreen extends Thread {
     }
 
     public void run() {
-        DataOutputStream dos = null;
+        DataOutputStream dos;
         BufferedImage buffImg;
-        File file;
-        FileInputStream fin = null;
-        String fileName = "./temp.jpeg";
-
-        int i;
+        ByteArrayOutputStream baos;
 
         while (true) {
             try {
                 dos = new DataOutputStream(socket.getOutputStream());
-                file = new File(fileName);
-                file.createNewFile();
                 buffImg = robot.createScreenCapture(rect);
-                ImageIO.write(buffImg, "jpeg", file);
-                dos.writeUTF(fileName);
 
-                fin = new FileInputStream(file);
-                byte[] readData = new byte[1024];
-                while ((i = fin.read(readData)) != -1) {
-                    dos.write(readData, 0, i);
-                }
-                file.delete();
+                baos = new ByteArrayOutputStream();
+                ImageIO.write(buffImg,"jpeg", baos);
+
+                byte[] bytes = baos.toByteArray();
+                System.out.println(bytes.length);
+                dos.write(bytes);
 
             } catch (Exception e) {
                 e.printStackTrace();
                 break;
             }
-        }
-        try {
-            assert fin != null;
-            fin.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

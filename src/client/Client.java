@@ -36,7 +36,5 @@ public class Client {
         return socket;
     }
 
-    public static void main(String[] args) throws IOException, AWTException {
-        new Client();
-    }
+
 }
