@@ -17,6 +17,7 @@ public class Client {
         Robot robot = new Robot(gdev);
 
         new SendScreen(socket, rect, robot);
+        socket.close();
     }
 
     protected static Socket createSocket() throws IOException {
