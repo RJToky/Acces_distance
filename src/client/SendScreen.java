@@ -19,6 +19,7 @@ public class SendScreen extends Thread {
         this.robot = robot;
     }
 
+    @Override
     public void run() {
         try {
             DataOutputStream dos;
