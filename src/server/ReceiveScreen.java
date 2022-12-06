@@ -1,9 +1,11 @@
 package server;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 
 public class ReceiveScreen extends Thread {
     Socket socket;
@@ -28,25 +30,23 @@ public class ReceiveScreen extends Thread {
         serverFrame.setPane(new Pane());
 
         while (true) {
-            byte[] bytes = new byte[1024 * 1024];
             try {
-                int count = 0;
-                do {
-                    count += dis.read(bytes, count, bytes.length - count);
-                    System.out.println(count);
-                } while (!(count > 4 && bytes[count - 2] == (byte) -1 && bytes[count - 1] == (byte) -39));
+                byte[] sizeAr = new byte[4];
+                dis.readFully(sizeAr);
 
-//                File file = new File("./temp.jpg");
-//                FileOutputStream out = new FileOutputStream(file);
-//                out.write(bytes);
-//
-//                buffImg = ImageIO.read(new File("./temp.jpg"));
+                int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
+                byte[] imageAr = new byte[size];
+                int totalRead = 0, currentRead;
 
-                buffImg = ImageIO.read(new ByteArrayInputStream(bytes));
+                while (totalRead < size && (currentRead = dis.read(imageAr, totalRead, size-totalRead)) > 0) {
+                    totalRead += currentRead;
+                }
+
+                buffImg = ImageIO.read(new ByteArrayInputStream(imageAr));
+                buffImg.getScaledInstance(buffImg.getWidth(null), buffImg.getHeight(null), Image.SCALE_FAST);
+
                 serverFrame.getPane().setBuffImg(buffImg);
                 serverFrame.getPane().repaint();
-
-                Thread.sleep(1);
 
             } catch (Exception e) {
                 e.printStackTrace();
