@@ -10,27 +10,21 @@ import java.nio.ByteBuffer;
 public class ReceiveScreen extends Thread {
     Socket socket;
     ServerFrame serverFrame;
+    boolean infiniteLoop = true;
 
     public ReceiveScreen(Socket socket) {
         this.socket = socket;
-        start();
     }
 
     public void run() {
-        DataInputStream dis;
-        BufferedImage buffImg;
-
         try {
-            dis = new DataInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            BufferedImage buffImg;
+            DataInputStream dis = new DataInputStream(socket.getInputStream());
 
-        serverFrame = new ServerFrame();
-        serverFrame.setPane(new Pane());
+            serverFrame = new ServerFrame();
+            serverFrame.setPane(new Pane());
 
-        while (true) {
-            try {
+            while (infiniteLoop) {
                 byte[] bytes = new byte[4];
                 dis.readFully(bytes);
 
@@ -47,11 +41,10 @@ public class ReceiveScreen extends Thread {
 
                 serverFrame.getPane().setBuffImg(buffImg);
                 serverFrame.getPane().repaint();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                break;
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

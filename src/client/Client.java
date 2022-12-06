@@ -6,21 +6,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Client {
+public class Client extends Thread {
     private final static int PORT = 1822;
 
-    public Client() throws IOException, AWTException {
-        Socket socket = createSocket();
-        GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gdev = genv.getDefaultScreenDevice();
-        Rectangle rect = genv.getMaximumWindowBounds();
-        Robot robot = new Robot(gdev);
+    @Override
+    public void run() {
+        try {
+            Socket socket = getSocket();
+            GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice gdev = genv.getDefaultScreenDevice();
+            Rectangle rect = genv.getMaximumWindowBounds();
+            Robot robot = new Robot(gdev);
 
-        new SendScreen(socket, rect, robot);
-        socket.close();
+            new SendScreen(socket, rect, robot).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    protected static Socket createSocket() throws IOException {
+    protected static Socket getSocket() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String host;
         Socket socket;
@@ -36,5 +40,4 @@ public class Client {
         }
         return socket;
     }
-
 }

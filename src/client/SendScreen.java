@@ -11,21 +11,21 @@ public class SendScreen extends Thread {
     Socket socket;
     Rectangle rect;
     Robot robot;
+    boolean infiniteLoop = true;
 
     public SendScreen(Socket socket, Rectangle rect, Robot robot) {
         this.socket = socket;
         this.rect = rect;
         this.robot = robot;
-        start();
     }
 
     public void run() {
-        DataOutputStream dos;
-        BufferedImage buffImg;
-        ByteArrayOutputStream baos;
+        try {
+            DataOutputStream dos;
+            BufferedImage buffImg;
+            ByteArrayOutputStream baos;
 
-        while (true) {
-            try {
+            while (infiniteLoop) {
                 dos = new DataOutputStream(socket.getOutputStream());
                 buffImg = robot.createScreenCapture(rect);
 
@@ -36,11 +36,9 @@ public class SendScreen extends Thread {
                 dos.write(bytes);
                 dos.write(baos.toByteArray());
                 dos.flush();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                break;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
