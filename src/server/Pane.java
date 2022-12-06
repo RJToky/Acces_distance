@@ -17,7 +17,7 @@ public class Pane extends JPanel {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g2d.drawImage(buffImg, 0, 0, buffImg.getWidth(null), buffImg.getHeight(null),null);
+            g2d.drawImage(buffImg, 0, 0, this);
 
         } catch (Exception e) {
             e.printStackTrace();
