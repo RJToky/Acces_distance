@@ -27,7 +27,9 @@ public class ReceiveEvent extends Thread {
                         y = in.readInt();
                         robot.mouseMove(x, y);
                     }
-                    case 1 -> {}
+                    case 1 -> robot.mousePress(in.readInt());
+                    case 2 -> robot.mouseRelease(in.readInt());
+                    case 3 -> robot.keyPress(in.readInt());
                 }
             }
         } catch (Exception e) {

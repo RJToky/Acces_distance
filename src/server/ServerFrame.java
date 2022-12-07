@@ -16,6 +16,8 @@ public class ServerFrame extends JFrame {
     public ServerFrame(Socket socket) throws IOException {
         canvas = new Canvas();
         canvas.addMouseMotionListener(new SendEvent(socket));
+        canvas.addMouseListener(new SendEvent(socket));
+        canvas.addKeyListener(new SendEvent(socket));
 
         Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(SCREEN_SIZE.width, SCREEN_SIZE.height);
