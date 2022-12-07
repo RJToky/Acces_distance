@@ -19,6 +19,8 @@ public class Client extends Thread {
             Robot robot = new Robot(gdev);
 
             new SendScreen(socket, rect, robot).start();
+            new ReceiveEvent(socket, robot).start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

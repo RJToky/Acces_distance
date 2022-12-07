@@ -21,8 +21,7 @@ public class ReceiveScreen extends Thread {
             BufferedImage buffImg;
             DataInputStream dis = new DataInputStream(socket.getInputStream());
 
-            serverFrame = new ServerFrame();
-            serverFrame.setPane(new Pane());
+            serverFrame = new ServerFrame(socket);
 
             while (infiniteLoop) {
                 byte[] bytes = new byte[4];
@@ -39,8 +38,8 @@ public class ReceiveScreen extends Thread {
                 buffImg = ImageIO.read(new ByteArrayInputStream(data));
                 buffImg.getScaledInstance(buffImg.getWidth(null), buffImg.getHeight(null), Image.SCALE_FAST);
 
-                serverFrame.getPane().setBuffImg(buffImg);
-                serverFrame.getPane().repaint();
+                serverFrame.setImage(buffImg);
+                serverFrame.update();
             }
 
         } catch (Exception e) {
