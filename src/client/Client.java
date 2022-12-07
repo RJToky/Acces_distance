@@ -13,10 +13,9 @@ public class Client extends Thread {
     public void run() {
         try {
             Socket socket = getSocket();
-            GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gdev = genv.getDefaultScreenDevice();
-            Rectangle rect = genv.getMaximumWindowBounds();
-            Robot robot = new Robot(gdev);
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            Rectangle rect = new Rectangle(dim);
+            Robot robot = new Robot();
 
             new SendScreen(socket, rect, robot).start();
             new ReceiveEvent(socket, robot).start();
