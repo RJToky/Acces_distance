@@ -2,9 +2,7 @@ package client;
 
 import java.awt.*;
 import java.io.DataInputStream;
-import java.io.InputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ReceiveEvent extends Thread {
     Socket socket;
@@ -28,7 +26,6 @@ public class ReceiveEvent extends Thread {
                         x = in.readInt();
                         y = in.readInt();
                         robot.mouseMove(x, y);
-                        System.out.println(x + " " + y);
                     }
                     case 1 -> {}
                 }
