@@ -5,8 +5,8 @@ import java.io.DataInputStream;
 import java.net.Socket;
 
 public class ReceiveEvent extends Thread {
-    Socket socket;
-    Robot robot;
+    private final Socket socket;
+    private final Robot robot;
     boolean infiniteLoop = true;
 
     public ReceiveEvent(Socket socket, Robot robot) {
@@ -17,7 +17,7 @@ public class ReceiveEvent extends Thread {
     @Override
     public void run() {
         try {
-            DataInputStream in = new DataInputStream(this.getSocket().getInputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
             int command, x, y;
             while (infiniteLoop) {
                 command = in.readInt();
@@ -35,13 +35,5 @@ public class ReceiveEvent extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
     }
 }

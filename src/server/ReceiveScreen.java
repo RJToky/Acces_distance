@@ -8,8 +8,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 
 public class ReceiveScreen extends Thread {
-    Socket socket;
-    ServerFrame serverFrame;
+    private final Socket socket;
     boolean infiniteLoop = true;
 
     public ReceiveScreen(Socket socket) {
@@ -21,7 +20,7 @@ public class ReceiveScreen extends Thread {
             BufferedImage buffImg;
             DataInputStream dis = new DataInputStream(socket.getInputStream());
 
-            serverFrame = new ServerFrame(socket);
+            ServerFrame serverFrame = new ServerFrame(socket);
 
             while (infiniteLoop) {
                 byte[] bytes = new byte[4];
@@ -45,22 +44,6 @@ public class ReceiveScreen extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
-    public ServerFrame getServerFrame() {
-        return serverFrame;
-    }
-
-    public void setServerFrame(ServerFrame serverFrame) {
-        this.serverFrame = serverFrame;
     }
 
 }

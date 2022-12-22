@@ -8,20 +8,21 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 
 public class SendScreen extends Thread {
-    Socket socket;
-    Rectangle rect;
-    Robot robot;
+    private final Socket socket;
+    private final Robot robot;
     boolean infiniteLoop = true;
 
-    public SendScreen(Socket socket, Rectangle rect, Robot robot) {
+    public SendScreen(Socket socket, Robot robot) {
         this.socket = socket;
-        this.rect = rect;
         this.robot = robot;
     }
 
     @Override
     public void run() {
         try {
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            Rectangle rect = new Rectangle(dim);
+
             DataOutputStream dos;
             BufferedImage buffImg;
             ByteArrayOutputStream baos;
@@ -42,4 +43,5 @@ public class SendScreen extends Thread {
             e.printStackTrace();
         }
     }
+
 }

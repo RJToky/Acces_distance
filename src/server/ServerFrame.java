@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ServerFrame extends JFrame {
-    Canvas canvas;
-    BufferStrategy bs;
-    Graphics g;
-    BufferedImage image;
+    private final BufferStrategy bs;
+    private final Graphics g;
+    private BufferedImage image;
 
     public ServerFrame(Socket socket) throws IOException {
-        canvas = new Canvas();
+        Canvas canvas = new Canvas();
         canvas.addMouseMotionListener(new SendEvent(socket));
         canvas.addMouseListener(new SendEvent(socket));
         canvas.addKeyListener(new SendEvent(socket));
@@ -32,18 +31,10 @@ public class ServerFrame extends JFrame {
         g = bs.getDrawGraphics();
     }
 
-    public void update() {
+    protected void update() {
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(image, 0, 0, null);
         bs.show();
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
     }
 
     public BufferedImage getImage() {

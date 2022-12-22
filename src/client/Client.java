@@ -12,12 +12,10 @@ public class Client extends Thread {
     @Override
     public void run() {
         try {
-            Socket socket = getSocket();
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            Rectangle rect = new Rectangle(dim);
+            Socket socket = Client.getSocket();
             Robot robot = new Robot();
 
-            new SendScreen(socket, rect, robot).start();
+            new SendScreen(socket, robot).start();
             new ReceiveEvent(socket, robot).start();
 
         } catch (Exception e) {
@@ -25,7 +23,7 @@ public class Client extends Thread {
         }
     }
 
-    protected static Socket getSocket() throws IOException {
+    private static Socket getSocket() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String host;
         Socket socket;

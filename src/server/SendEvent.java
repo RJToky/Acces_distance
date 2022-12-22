@@ -6,12 +6,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class SendEvent implements MouseMotionListener, MouseListener, KeyListener {
-    Socket socket;
-    DataOutputStream daos;
+    private final DataOutputStream daos;
 
     public SendEvent(Socket socket) throws IOException {
-        this.socket = socket;
-        this.daos = new DataOutputStream(this.getSocket().getOutputStream());
+        this.daos = new DataOutputStream(socket.getOutputStream());
     }
 
     @Override
@@ -91,14 +89,6 @@ public class SendEvent implements MouseMotionListener, MouseListener, KeyListene
     @Override
     public void keyReleased(KeyEvent keyEvent) {
 
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
     }
 
 }
